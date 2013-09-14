@@ -194,6 +194,7 @@ function initUIListeners()
         autowoot = !autowoot;
         $(this).css('color', autowoot ? '#3FFF00' : '#ED1C24');
 		
+		API.sendChat("Time:" + API.getTimeRemaining());
         if (autowoot) 
 		{
             $('#button-vote-positive').click();
@@ -224,7 +225,6 @@ function initUIListeners()
 		{
             duration: 'medium'
         });
-		API.sendChat(API.getTimeRemaining());
         jaaulde.utils.cookies.set(COOKIE_HIDE_VIDEO, hideVideo);
     });
 	
