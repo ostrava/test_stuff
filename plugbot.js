@@ -323,10 +323,6 @@ function queueUpdate()
 		{
 			joinQueue();
 		}
-		else if(waitListNotEmpty())
-		{
-			API.djLeave();
-		}
     }
 }
 
@@ -354,18 +350,6 @@ function joinQueue()
 	{
        API.djJoin();
     }
-}
-
-function waitListNotEmpty()
-{
-	if (API.getWaitList().length !== 0)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }
 
 /**
