@@ -250,10 +250,7 @@ function initUIListeners()
         autoqueue = !autoqueue;
         $(this).css('color', autoqueue ? '#3FFF00' : '#ED1C24');
 		
-        if (autoqueue && !isInQueue()) 
-		{
-            joinQueue();
-        }
+        queueUpdate();
         jaaulde.utils.cookies.set(COOKIE_QUEUE, autoqueue);
     });
 }
@@ -314,9 +311,10 @@ function queueUpdate()
 		API.djLeave();
 	}
 	
-    if (autoqueue && !isInQueue()) 
+    if (autoqueue) 
 	{
-        joinQueue();
+		if (!isInQueue)
+			joinQueue();
     }
 }
 
