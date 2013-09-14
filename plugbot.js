@@ -313,8 +313,14 @@ function queueUpdate()
 	
     if (autoqueue) 
 	{
-		if (!isInQueue)
+		if (!isInQueue())
+		{
 			joinQueue();
+		}
+		else if (!isWaitListEmpty())
+		{
+			API.djLeave();
+		}
     }
 }
 
@@ -337,11 +343,12 @@ function joinQueue()
     if ($('#button-dj-play').css('display') === 'block') 
 	{
         $('#button-dj-play').click();
-    } 
-	else if (API.getWaitList().length < MAX_USERS_WAITLIST) 
-	{
-       API.djJoin();
     }
+}
+
+function isWaitListEmpty()
+{
+	return API.getWaitList().length == 0;
 }
 
 /**
