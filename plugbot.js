@@ -144,12 +144,12 @@ function displayUI()
      * Generate the HTML code for the UI.
      */
     $('#chat').prepend('<div id="plugbot-ui"></div>');
-
+	
     var cWoot = autowoot ? '#3FFF00' : '#ED1C24';
     var cQueue = autoqueue ? '#3FFF00' : '#ED1C24';
     var cHideVideo = hideVideo ? '#3FFF00' : '#ED1C24';
     var cUserList = userList ? '#3FFF00' : '#ED1C24';
-
+	
     $('#plugbot-ui').append(
         '<p id="plugbot-btn-woot" style="color:' + cWoot + '">auto-woot</p><p id="plugbot-btn-queue" style="color:' + cQueue + '">auto-queue</p><p id="plugbot-btn-hidevideo" style="color:' + cHideVideo + '">hide video</p><p id="plugbot-btn-skipvideo" style="color:#ED1C24">skip video</p><p id="plugbot-btn-userlist" style="color:' + cUserList + '">userlist</p>');
 }
@@ -170,7 +170,7 @@ function initUIListeners()
         userList = !userList;
         $(this).css('color', userList ? '#3FFF00' : '#ED1C24');
         $('#plugbot-userlist').css('visibility', userList ? 'visible' : 'hidden');
-
+		
         if (!userList) 
 		{
             $('#plugbot-userlist').empty();
@@ -189,12 +189,12 @@ function initUIListeners()
 	{
         autowoot = !autowoot;
         $(this).css('color', autowoot ? '#3FFF00' : '#ED1C24');
-
+		
         if (autowoot) 
 		{
             $('#button-vote-positive').click();
         }
-
+		
         jaaulde.utils.cookies.set(COOKIE_WOOT, autowoot);
     });
 
@@ -222,7 +222,7 @@ function initUIListeners()
         });
         jaaulde.utils.cookies.set(COOKIE_HIDE_VIDEO, hideVideo);
     });
-
+	
 	/*
 	 * Skip the current video.
 	 */
@@ -249,7 +249,7 @@ function initUIListeners()
 	{
         autoqueue = !autoqueue;
         $(this).css('color', autoqueue ? '#3FFF00' : '#ED1C24');
-
+		
         if (autoqueue && !isInQueue()) 
 		{
             joinQueue();
@@ -274,7 +274,7 @@ function djAdvanced(obj)
         $('#yt-frame').css('height', '0px');
         $('#playback .frame-background').css('opacity', '0.0');
     }
-
+	
 	if (skippingVideo)
 	{
 		$('#plugbot-btn-skipvideo').css('color', '#ED1C24').text('skip video');
@@ -308,21 +308,9 @@ function queueUpdate()
      * If auto-queueing has been enabled, and we are currently
      * not in the waitlist, then try to join the list.
      */
-	
-	if (!autoqueue)
+    if (autoqueue && !isInQueue()) 
 	{
-		if (isInQueue())
-		{
-			API.djLeave();
-		}
-	}
-	
-    if (autoqueue)) 
-	{
-		if (!isInQueue())
-		{
-			joinQueue();
-		}
+        joinQueue();
     }
 }
 
@@ -594,6 +582,7 @@ function drawUserlistItem(imagePath, color, username)
     $('#plugbot-userlist').append(
         '<p style="cursor:pointer;' + (imagePath === 'void' ? '' : 'text-indent:6px !important;') + 'color:' + color + ';' + ((API.getDJs()[0].username == username) ? 'font-size:15px;font-weight:bold;' : '') + '" onclick="$(\'#chat-input-field\').val($(\'#chat-input-field\').val() + \'@' + username + ' \').focus();">' + username + '</p>');
 }
+
 
 ///////////////////////////////////////////////////////////
 ////////// EVERYTHING FROM HERE ON OUT IS INIT ////////////
