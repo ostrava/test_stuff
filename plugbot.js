@@ -355,7 +355,10 @@ function joinQueue()
 function waitListNotEmpty()
 {
 	var len = API.getWaitList().length;
-	return (len != 0);
+	if (len !== 0)
+		return true;
+	else
+		return false;
 }
 
 /**
