@@ -58,8 +58,8 @@ var userList;
 var skippingVideo = false;
 
 var usersJoinedSinceAlarm = 0;
-var timer
-var timer_alarm = 100;
+var timer;
+var timer_alarm = 1800000; //milliseconds = 30 minutes
 /*
  * Cookie constants
  */
@@ -194,7 +194,6 @@ function initUIListeners()
         autowoot = !autowoot;
         $(this).css('color', autowoot ? '#3FFF00' : '#ED1C24');
 		
-		API.sendChat("Time:" + API.getTimeRemaining());
         if (autowoot) 
 		{
             $('#button-vote-positive').click();
@@ -741,4 +740,30 @@ function onCookiesLoaded()
     initAPIListeners();
     displayUI();
     initUIListeners();
+	
+	//Start the first timer for messaging the rules
+	initRuleSpam();
+}
+
+function initRuleSpam()
+{
+	timer = setTimeout(chatRuleSpam, timer_alarm);
+	API.on(API.USER_JOIN, incrementNewfags);
+}
+
+function incrementNewfags()
+{
+	usersJoinedSinceAlarm++;
+	if (usersJoinedSinceAlarm > 2)
+	{
+		usersJoinedSinceAlarm = 0;
+		spamRules();
+	}
+}
+
+function spamRules()
+{
+	clearTimeout(timer);
+	API.sendChat("TODO: Add rules");
+	timer = setTimeout(chatRuleSpam, timer_alarm);
 }
