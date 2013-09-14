@@ -59,7 +59,7 @@ var skippingVideo = false;
 
 var usersJoinedSinceAlarm = 0;
 var timer;
-var timer_alarm = 1800000; //milliseconds = 30 minutes
+var timer_alarm = 120000; //milliseconds = 30 minutes
 /*
  * Cookie constants
  */
@@ -747,7 +747,7 @@ function onCookiesLoaded()
 
 function initRuleSpam()
 {
-	timer = setTimeout(chatRuleSpam, timer_alarm);
+	timer = setTimeout(spamRules, timer_alarm);
 	API.on(API.USER_JOIN, incrementNewfags);
 }
 
@@ -765,5 +765,5 @@ function spamRules()
 {
 	clearTimeout(timer);
 	API.sendChat("TODO: Add rules");
-	timer = setTimeout(chatRuleSpam, timer_alarm);
+	timer = setTimeout(spamRules, timer_alarm);
 }
