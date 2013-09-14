@@ -57,6 +57,9 @@ var userList;
  */
 var skippingVideo = false;
 
+var usersJoinedSinceAlarm = 0;
+var timer
+var timer_alarm = 100;
 /*
  * Cookie constants
  */
@@ -125,6 +128,7 @@ function initAPIListeners()
             populateUserlist();
         }
     });
+	
 }
 
 
@@ -220,6 +224,7 @@ function initUIListeners()
 		{
             duration: 'medium'
         });
+		API.sendChat(API.getTimeRemaining());
         jaaulde.utils.cookies.set(COOKIE_HIDE_VIDEO, hideVideo);
     });
 	
