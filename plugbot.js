@@ -320,9 +320,13 @@ function queueUpdate()
     if (autoqueue)) 
 	{
 		if (!isInQueue())
+		{
 			joinQueue();
+		}
 		else if(waitListNotEmpty())
+		{
 			API.djLeave();
+		}
     }
 }
 
@@ -354,11 +358,14 @@ function joinQueue()
 
 function waitListNotEmpty()
 {
-	var len = API.getWaitList().length;
-	if (len !== 0)
+	if (API.getWaitList().length !== 0)
+	{
 		return true;
+	}
 	else
+	{
 		return false;
+	}
 }
 
 /**
