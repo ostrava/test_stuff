@@ -125,6 +125,8 @@ function initAPIListeners()
             populateUserlist();
         }
     });
+	
+	API.on(API.WAIT_LIST_UPDATE, removeFromQueue)
 }
 
 
@@ -308,9 +310,21 @@ function queueUpdate()
      * If auto-queueing has been enabled, and we are currently
      * not in the waitlist, then try to join the list.
      */
-    if (autoqueue && !isInQueue()) 
+	
+	if (!autoqueue)
 	{
-        joinQueue();
+		if (isInQueue())
+		{
+			API.djLeave();
+		}
+	}
+	
+    if (autoqueue)) 
+	{
+		if (!isInQueue())
+			joinQueue();
+		else if(waitListNotEmpty())
+			API.djLeave();
     }
 }
 
@@ -338,6 +352,12 @@ function joinQueue()
 	{
        API.djJoin();
     }
+}
+
+function waitListNotEmpty()
+{
+	var len = API.getWaitList().length;
+	return (len != 0);
 }
 
 /**
@@ -582,7 +602,6 @@ function drawUserlistItem(imagePath, color, username)
     $('#plugbot-userlist').append(
         '<p style="cursor:pointer;' + (imagePath === 'void' ? '' : 'text-indent:6px !important;') + 'color:' + color + ';' + ((API.getDJs()[0].username == username) ? 'font-size:15px;font-weight:bold;' : '') + '" onclick="$(\'#chat-input-field\').val($(\'#chat-input-field\').val() + \'@' + username + ' \').focus();">' + username + '</p>');
 }
-
 
 ///////////////////////////////////////////////////////////
 ////////// EVERYTHING FROM HERE ON OUT IS INIT ////////////
