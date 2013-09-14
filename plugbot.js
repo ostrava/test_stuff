@@ -125,8 +125,6 @@ function initAPIListeners()
             populateUserlist();
         }
     });
-	
-	API.on(API.WAIT_LIST_UPDATE, removeFromQueue)
 }
 
 
