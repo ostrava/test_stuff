@@ -308,6 +308,12 @@ function queueUpdate()
      * If auto-queueing has been enabled, and we are currently
      * not in the waitlist, then try to join the list.
      */
+	 
+	if (!autoqueue && isInQueue())
+	{
+		API.djLeave();
+	}
+	
     if (autoqueue && !isInQueue()) 
 	{
         joinQueue();
